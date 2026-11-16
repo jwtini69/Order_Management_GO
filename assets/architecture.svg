@@ -1,0 +1,217 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="100%" height="100%" style="background:#090d16; border-radius:12px; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <linearGradient id="grad-card" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95"/>
+    </linearGradient>
+    <linearGradient id="blue-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#60a5fa"/>
+    </linearGradient>
+    <linearGradient id="cyan-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+    <linearGradient id="emerald-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <linearGradient id="purple-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    <linearGradient id="amber-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748b"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <!-- Title Badge -->
+  <rect x="30" y="25" width="220" height="32" rx="16" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <circle cx="46" cy="41" r="5" fill="#10b981" filter="url(#glow)"/>
+  <text x="60" y="46" font-size="12" font-weight="700" fill="#f8fafc" letter-spacing="1">SYSTEM ARCHITECTURE</text>
+
+  <text x="30" y="85" font-size="22" font-weight="800" fill="#ffffff" letter-spacing="-0.5">High-Throughput Clean Layered Architecture</text>
+  <text x="30" y="108" font-size="13" font-weight="400" fill="#94a3b8">Decoupled Domain Services, Strict Boundary Separation, and ACID-Compliant Concurrency</text>
+
+  <!-- ==================== CLIENT LAYER ==================== -->
+  <g transform="translate(40, 140)">
+    <rect width="140" height="420" rx="10" fill="url(#grad-card)" stroke="#334155" stroke-width="1" filter="url(#shadow)"/>
+    <rect width="140" height="36" rx="10" fill="#1e293b"/>
+    <path d="M0 26 h140 v10 H0 z" fill="#1e293b"/>
+    <text x="70" y="23" font-size="12" font-weight="700" fill="#38bdf8" text-anchor="middle" letter-spacing="0.5">CLIENT LAYER</text>
+
+    <!-- Client Cards -->
+    <rect x="15" y="60" width="110" height="65" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+    <text x="70" y="88" font-size="12" font-weight="600" fill="#f1f5f9" text-anchor="middle">Web / SPA</text>
+    <text x="70" y="106" font-size="10" fill="#64748b" text-anchor="middle">React / Vue / Next.js</text>
+
+    <rect x="15" y="145" width="110" height="65" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+    <text x="70" y="173" font-size="12" font-weight="600" fill="#f1f5f9" text-anchor="middle">Mobile Apps</text>
+    <text x="70" y="191" font-size="10" fill="#64748b" text-anchor="middle">iOS / Android</text>
+
+    <rect x="15" y="230" width="110" height="65" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+    <text x="70" y="258" font-size="12" font-weight="600" fill="#f1f5f9" text-anchor="middle">B2B Partners</text>
+    <text x="70" y="276" font-size="10" fill="#64748b" text-anchor="middle">REST APIs / Webhooks</text>
+
+    <rect x="15" y="315" width="110" height="65" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+    <text x="70" y="343" font-size="12" font-weight="600" fill="#f1f5f9" text-anchor="middle">Admin Portal</text>
+    <text x="70" y="361" font-size="10" fill="#64748b" text-anchor="middle">Inventory Ops / RBAC</text>
+  </g>
+
+  <!-- Connectors Client -> Gateway -->
+  <line x1="180" y1="350" x2="230" y2="350" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow-blue)"/>
+  <text x="205" y="340" font-size="9" font-weight="600" fill="#38bdf8" text-anchor="middle">HTTPS</text>
+
+  <!-- ==================== HTTP & MIDDLEWARE ==================== -->
+  <g transform="translate(230, 140)">
+    <rect width="150" height="420" rx="10" fill="url(#grad-card)" stroke="#334155" stroke-width="1" filter="url(#shadow)"/>
+    <rect width="150" height="36" rx="10" fill="#1e293b"/>
+    <path d="M0 26 h150 v10 H0 z" fill="#1e293b"/>
+    <text x="75" y="23" font-size="12" font-weight="700" fill="#818cf8" text-anchor="middle" letter-spacing="0.5">ROUTER &amp; MW</text>
+
+    <rect x="15" y="55" width="120" height="50" rx="6" fill="#0f172a" stroke="#4338ca" stroke-width="1"/>
+    <text x="75" y="78" font-size="11" font-weight="700" fill="#c7d2fe" text-anchor="middle">Gin HTTP Engine</text>
+    <text x="75" y="94" font-size="9" fill="#818cf8" text-anchor="middle">High Performance</text>
+
+    <rect x="15" y="115" width="120" height="42" rx="6" fill="#1e1b4b" stroke="#6366f1" stroke-width="1"/>
+    <text x="75" y="134" font-size="11" font-weight="600" fill="#e0e7ff" text-anchor="middle">CORS &amp; Recovery</text>
+    <text x="75" y="148" font-size="8" fill="#a5b4fc" text-anchor="middle">Panic Safe Guard</text>
+
+    <rect x="15" y="167" width="120" height="48" rx="6" fill="#1e1b4b" stroke="#6366f1" stroke-width="1"/>
+    <text x="75" y="186" font-size="11" font-weight="700" fill="#a5b4fc" text-anchor="middle">JWT Auth</text>
+    <text x="75" y="202" font-size="9" fill="#c7d2fe" text-anchor="middle">Claims Validation</text>
+
+    <rect x="15" y="225" width="120" height="48" rx="6" fill="#1e1b4b" stroke="#6366f1" stroke-width="1"/>
+    <text x="75" y="244" font-size="11" font-weight="700" fill="#a5b4fc" text-anchor="middle">RBAC Filter</text>
+    <text x="75" y="260" font-size="9" fill="#c7d2fe" text-anchor="middle">Admin vs Customer</text>
+
+    <rect x="15" y="283" width="120" height="42" rx="6" fill="#1e1b4b" stroke="#6366f1" stroke-width="1"/>
+    <text x="75" y="302" font-size="10" font-weight="600" fill="#e0e7ff" text-anchor="middle">Structured Logger</text>
+    <text x="75" y="316" font-size="8" fill="#a5b4fc" text-anchor="middle">log/slog JSON format</text>
+
+    <rect x="15" y="335" width="120" height="55" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="75" y="355" font-size="10" font-weight="700" fill="#94a3b8" text-anchor="middle">Route Dispatcher</text>
+    <text x="75" y="372" font-size="9" fill="#38bdf8" text-anchor="middle">/api/v1/orders</text>
+    <text x="75" y="384" font-size="8" fill="#64748b" text-anchor="middle">/api/v1/products, /inventory</text>
+  </g>
+
+  <!-- Connectors Router -> Services -->
+  <line x1="380" y1="350" x2="430" y2="350" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ==================== CORE SERVICES LAYER ==================== -->
+  <g transform="translate(430, 140)">
+    <rect width="180" height="420" rx="10" fill="url(#grad-card)" stroke="#334155" stroke-width="1" filter="url(#shadow)"/>
+    <rect width="180" height="36" rx="10" fill="#1e293b"/>
+    <path d="M0 26 h180 v10 H0 z" fill="#1e293b"/>
+    <text x="90" y="23" font-size="12" font-weight="700" fill="#34d399" text-anchor="middle" letter-spacing="0.5">BUSINESS SERVICES</text>
+
+    <rect x="15" y="55" width="150" height="65" rx="6" fill="#064e3b" stroke="#059669" stroke-width="1"/>
+    <text x="90" y="78" font-size="12" font-weight="700" fill="#a7f3d0" text-anchor="middle">OrderService</text>
+    <text x="90" y="96" font-size="9" fill="#6ee7b7" text-anchor="middle">• Concurrency Coordinator</text>
+    <text x="90" y="110" font-size="9" fill="#6ee7b7" text-anchor="middle">• Order Lifecycle &amp; State</text>
+
+    <rect x="15" y="130" width="150" height="65" rx="6" fill="#022c22" stroke="#047857" stroke-width="1"/>
+    <text x="90" y="153" font-size="12" font-weight="700" fill="#6ee7b7" text-anchor="middle">InventoryService</text>
+    <text x="90" y="171" font-size="9" fill="#a7f3d0" text-anchor="middle">• Stock Reservation</text>
+    <text x="90" y="185" font-size="9" fill="#a7f3d0" text-anchor="middle">• Restock &amp; Audit Logs</text>
+
+    <rect x="15" y="205" width="150" height="60" rx="6" fill="#022c22" stroke="#047857" stroke-width="1"/>
+    <text x="90" y="228" font-size="12" font-weight="700" fill="#6ee7b7" text-anchor="middle">ProductService</text>
+    <text x="90" y="246" font-size="9" fill="#a7f3d0" text-anchor="middle">• Catalog Search &amp; Filter</text>
+    <text x="90" y="258" font-size="9" fill="#a7f3d0" text-anchor="middle">• Dynamic Pagination</text>
+
+    <rect x="15" y="275" width="150" height="60" rx="6" fill="#022c22" stroke="#047857" stroke-width="1"/>
+    <text x="90" y="298" font-size="12" font-weight="700" fill="#6ee7b7" text-anchor="middle">AuthService</text>
+    <text x="90" y="316" font-size="9" fill="#a7f3d0" text-anchor="middle">• Bcrypt (Cost 10) Hash</text>
+    <text x="90" y="328" font-size="9" fill="#a7f3d0" text-anchor="middle">• HS256 Token Issuance</text>
+
+    <rect x="15" y="345" width="150" height="55" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="90" y="367" font-size="10" font-weight="700" fill="#94a3b8" text-anchor="middle">Domain Errors &amp; Rules</text>
+    <text x="90" y="385" font-size="8" fill="#f87171" text-anchor="middle">ErrInsufficientStock | ErrNotFound</text>
+  </g>
+
+  <!-- Connectors Services -> Repositories -->
+  <line x1="610" y1="350" x2="660" y2="350" stroke="#34d399" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ==================== REPOSITORY LAYER ==================== -->
+  <g transform="translate(660, 140)">
+    <rect width="150" height="420" rx="10" fill="url(#grad-card)" stroke="#334155" stroke-width="1" filter="url(#shadow)"/>
+    <rect width="150" height="36" rx="10" fill="#1e293b"/>
+    <path d="M0 26 h150 v10 H0 z" fill="#1e293b"/>
+    <text x="75" y="23" font-size="12" font-weight="700" fill="#fbbf24" text-anchor="middle" letter-spacing="0.5">REPOSITORY (PGX)</text>
+
+    <rect x="15" y="55" width="120" height="60" rx="6" fill="#451a03" stroke="#b45309" stroke-width="1"/>
+    <text x="75" y="78" font-size="11" font-weight="700" fill="#fde68a" text-anchor="middle">OrderRepo</text>
+    <text x="75" y="95" font-size="8" fill="#fcd34d" text-anchor="middle">Atomic Tx Coordinator</text>
+    <text x="75" y="107" font-size="8" fill="#fde68a" text-anchor="middle">Serializable Isolation</text>
+
+    <rect x="15" y="125" width="120" height="65" rx="6" fill="#78350f" stroke="#f59e0b" stroke-width="1"/>
+    <text x="75" y="146" font-size="11" font-weight="700" fill="#fef08a" text-anchor="middle">InventoryRepo</text>
+    <text x="75" y="163" font-size="8" font-weight="700" fill="#4ade80" text-anchor="middle">SELECT FOR UPDATE</text>
+    <text x="75" y="176" font-size="8" fill="#fef08a" text-anchor="middle">Pessimistic Row Lock</text>
+
+    <rect x="15" y="200" width="120" height="50" rx="6" fill="#451a03" stroke="#b45309" stroke-width="1"/>
+    <text x="75" y="222" font-size="11" font-weight="700" fill="#fde68a" text-anchor="middle">ProductRepo</text>
+    <text x="75" y="239" font-size="8" fill="#fcd34d" text-anchor="middle">Dynamic Query Builder</text>
+
+    <rect x="15" y="260" width="120" height="50" rx="6" fill="#451a03" stroke="#b45309" stroke-width="1"/>
+    <text x="75" y="282" font-size="11" font-weight="700" fill="#fde68a" text-anchor="middle">UserRepo</text>
+    <text x="75" y="299" font-size="8" fill="#fcd34d" text-anchor="middle">Unique Email Indexes</text>
+
+    <rect x="15" y="325" width="120" height="75" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+    <text x="75" y="347" font-size="10" font-weight="700" fill="#94a3b8" text-anchor="middle">pgxpool.Pool</text>
+    <text x="75" y="364" font-size="8" fill="#cbd5e1" text-anchor="middle">MaxConns: 25</text>
+    <text x="75" y="377" font-size="8" fill="#cbd5e1" text-anchor="middle">MinConns: 5</text>
+    <text x="75" y="390" font-size="8" fill="#64748b" text-anchor="middle">Idle: 30m | MaxLife: 1h</text>
+  </g>
+
+  <!-- Connectors Repositories -> Database -->
+  <line x1="810" y1="350" x2="850" y2="350" stroke="#fbbf24" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ==================== DATABASE LAYER ==================== -->
+  <g transform="translate(850, 140)">
+    <rect width="110" height="420" rx="10" fill="url(#grad-card)" stroke="#334155" stroke-width="1" filter="url(#shadow)"/>
+    <rect width="110" height="36" rx="10" fill="#1e293b"/>
+    <path d="M0 26 h110 v10 H0 z" fill="#1e293b"/>
+    <text x="55" y="23" font-size="12" font-weight="700" fill="#60a5fa" text-anchor="middle" letter-spacing="0.5">POSTGRESQL 16</text>
+
+    <!-- DB Cylinders -->
+    <rect x="15" y="55" width="80" height="38" rx="4" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1"/>
+    <text x="55" y="78" font-size="10" font-weight="700" fill="#bfdbfe" text-anchor="middle">orders</text>
+
+    <rect x="15" y="103" width="80" height="38" rx="4" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1"/>
+    <text x="55" y="126" font-size="10" font-weight="700" fill="#bfdbfe" text-anchor="middle">order_items</text>
+
+    <rect x="15" y="151" width="80" height="44" rx="4" fill="#1d4ed8" stroke="#60a5fa" stroke-width="1"/>
+    <text x="55" y="172" font-size="10" font-weight="700" fill="#eff6ff" text-anchor="middle">inventory</text>
+    <text x="55" y="187" font-size="8" fill="#93c5fd" text-anchor="middle">Row-Lock Target</text>
+
+    <rect x="15" y="205" width="80" height="38" rx="4" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1"/>
+    <text x="55" y="228" font-size="9" font-weight="700" fill="#bfdbfe" text-anchor="middle">inv_trans</text>
+
+    <rect x="15" y="253" width="80" height="38" rx="4" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1"/>
+    <text x="55" y="276" font-size="10" font-weight="700" fill="#bfdbfe" text-anchor="middle">products</text>
+
+    <rect x="15" y="301" width="80" height="38" rx="4" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1"/>
+    <text x="55" y="324" font-size="10" font-weight="700" fill="#bfdbfe" text-anchor="middle">categories</text>
+
+    <rect x="15" y="349" width="80" height="38" rx="4" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1"/>
+    <text x="55" y="372" font-size="10" font-weight="700" fill="#bfdbfe" text-anchor="middle">users</text>
+  </g>
+</svg>

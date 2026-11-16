@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" width="100%" height="100%" style="background:#090d16; border-radius:12px; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <linearGradient id="custA-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="custB-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <linearGradient id="db-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#3730a3"/>
+    </linearGradient>
+
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000000" flood-opacity="0.4"/>
+    </filter>
+
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arr-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#fbbf24"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#4ade80"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f87171"/>
+    </marker>
+  </defs>
+
+  <!-- Header Section -->
+  <rect x="30" y="25" width="280" height="30" rx="15" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <circle cx="45" cy="40" r="5" fill="#f59e0b"/>
+  <text x="60" y="45" font-size="11" font-weight="700" fill="#f8fafc" letter-spacing="1">RACE CONDITION PREVENTION</text>
+
+  <text x="30" y="85" font-size="22" font-weight="800" fill="#ffffff" letter-spacing="-0.5">Concurrent Order Processing &amp; Row-Level Locking</text>
+  <text x="30" y="108" font-size="13" font-weight="400" fill="#94a3b8">Scenario: Stock = 1. Customer A and Customer B submit checkout requests at the exact same millisecond.</text>
+
+  <!-- ==================== PARTICIPANTS ==================== -->
+  <!-- Customer A -->
+  <g transform="translate(70, 135)">
+    <rect width="160" height="50" rx="8" fill="url(#custA-grad)" stroke="#38bdf8" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="80" y="25" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Customer A</text>
+    <text x="80" y="40" font-size="10" fill="#bae6fd" text-anchor="middle">Goroutine #1042</text>
+    <!-- Lifeline -->
+    <line x1="80" y1="50" x2="80" y2="520" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4,4"/>
+  </g>
+
+  <!-- PostgreSQL Engine -->
+  <g transform="translate(400, 135)">
+    <rect width="200" height="50" rx="8" fill="url(#db-grad)" stroke="#818cf8" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="100" y="25" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">PostgreSQL 16</text>
+    <text x="100" y="40" font-size="10" fill="#c7d2fe" text-anchor="middle">inventory row (product_id=42)</text>
+    <!-- Lifeline -->
+    <line x1="100" y1="50" x2="100" y2="520" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="4,4"/>
+  </g>
+
+  <!-- Customer B -->
+  <g transform="translate(770, 135)">
+    <rect width="160" height="50" rx="8" fill="url(#custB-grad)" stroke="#fbbf24" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="80" y="25" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Customer B</text>
+    <text x="80" y="40" font-size="10" fill="#fef3c7" text-anchor="middle">Goroutine #1043</text>
+    <!-- Lifeline -->
+    <line x1="80" y1="50" x2="80" y2="520" stroke="#d97706" stroke-width="1.5" stroke-dasharray="4,4"/>
+  </g>
+
+  <!-- ==================== TIMELINE INTERACTIONS ==================== -->
+
+  <!-- Initial Stock Card -->
+  <rect x="425" y="200" width="150" height="26" rx="13" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="500" y="217" font-size="11" font-weight="700" fill="#38bdf8" text-anchor="middle">Stock Available: 1</text>
+
+  <!-- Step 1: Customer A calls SELECT ... FOR UPDATE -->
+  <line x1="150" y1="245" x2="495" y2="245" stroke="#38bdf8" stroke-width="1.8" marker-end="url(#arr-blue)"/>
+  <rect x="175" y="228" width="280" height="18" rx="4" fill="#0c4a6e" opacity="0.9"/>
+  <text x="315" y="241" font-size="10" font-weight="600" fill="#e0f2fe" text-anchor="middle">1. BEGIN; SELECT ... FOR UPDATE (Tx A)</text>
+
+  <!-- Lock Granted Box -->
+  <rect x="445" y="260" width="110" height="22" rx="4" fill="#065f46" stroke="#10b981" stroke-width="1"/>
+  <text x="500" y="275" font-size="10" font-weight="700" fill="#a7f3d0" text-anchor="middle">🔒 LOCK ACQUIRED</text>
+
+  <!-- Step 2: Customer B calls SELECT ... FOR UPDATE concurrently -->
+  <line x1="850" y1="290" x2="505" y2="290" stroke="#fbbf24" stroke-width="1.8" marker-end="url(#arr-amber)"/>
+  <rect x="545" y="273" width="280" height="18" rx="4" fill="#78350f" opacity="0.9"/>
+  <text x="685" y="286" font-size="10" font-weight="600" fill="#fef3c7" text-anchor="middle">2. BEGIN; SELECT ... FOR UPDATE (Tx B)</text>
+
+  <!-- Customer B WAITING / BLOCKED Badge -->
+  <rect x="445" y="310" width="110" height="36" rx="4" fill="#7f1d1d" stroke="#ef4444" stroke-width="1"/>
+  <text x="500" y="325" font-size="10" font-weight="700" fill="#fecaca" text-anchor="middle">⛔ BLOCKED</text>
+  <text x="500" y="338" font-size="8" fill="#fca5a5" text-anchor="middle">Waiting for Tx A release</text>
+
+  <!-- Step 3: Customer A reserves stock & inserts order -->
+  <rect x="80" y="355" width="260" height="50" rx="6" fill="#0f172a" stroke="#0284c7" stroke-width="1"/>
+  <text x="90" y="372" font-size="10" font-weight="700" fill="#38bdf8">Customer A Logic:</text>
+  <text x="90" y="386" font-size="9" fill="#e2e8f0">• Check: (quantity - reserved) &gt;= 1 → PASS</text>
+  <text x="90" y="398" font-size="9" fill="#e2e8f0">• UPDATE inventory: reserved_quantity += 1</text>
+
+  <!-- Step 4: Customer A Commits -->
+  <line x1="150" y1="420" x2="495" y2="420" stroke="#4ade80" stroke-width="1.8" marker-end="url(#arr-green)"/>
+  <rect x="230" y="405" width="190" height="18" rx="4" fill="#064e3b" opacity="0.9"/>
+  <text x="325" y="418" font-size="10" font-weight="700" fill="#86efac" text-anchor="middle">3. INSERT orders &amp; COMMIT (Tx A)</text>
+
+  <!-- Stock Updated & Lock Released -->
+  <rect x="425" y="435" width="150" height="30" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="1"/>
+  <text x="500" y="449" font-size="9" font-weight="700" fill="#4ade80" text-anchor="middle">🔓 LOCK RELEASED</text>
+  <text x="500" y="460" font-size="8" fill="#94a3b8" text-anchor="middle">Stock Available: 0 (Reserved: 1)</text>
+
+  <!-- Step 5: Customer A receives 201 Created -->
+  <line x1="495" y1="465" x2="155" y2="465" stroke="#4ade80" stroke-width="1.8" marker-end="url(#arr-green)"/>
+  <rect x="180" y="470" width="220" height="20" rx="4" fill="#064e3b"/>
+  <text x="290" y="484" font-size="10" font-weight="700" fill="#86efac" text-anchor="middle">HTTP 201 Created (Order Confirmed)</text>
+
+  <!-- Step 6: Customer B unblocks and re-evaluates -->
+  <rect x="660" y="430" width="260" height="60" rx="6" fill="#0f172a" stroke="#d97706" stroke-width="1"/>
+  <text x="670" y="448" font-size="10" font-weight="700" fill="#fbbf24">Customer B Unblocks:</text>
+  <text x="670" y="462" font-size="9" fill="#e2e8f0">• Lock granted to Tx B</text>
+  <text x="670" y="474" font-size="9" fill="#e2e8f0">• Reads fresh committed state: Available = 0</text>
+  <text x="670" y="486" font-size="9" fill="#f87171">• Check: 0 &gt;= 1 → FAILS (Insufficient)</text>
+
+  <!-- Step 7: Customer B Rollback & Conflict Response -->
+  <line x1="850" y1="520" x2="505" y2="520" stroke="#f87171" stroke-width="1.8" marker-end="url(#arr-red)"/>
+  <rect x="560" y="505" width="240" height="18" rx="4" fill="#450a0a"/>
+  <text x="680" y="518" font-size="10" font-weight="700" fill="#fca5a5" text-anchor="middle">4. ROLLBACK (Tx B)</text>
+
+  <line x1="505" y1="550" x2="845" y2="550" stroke="#f87171" stroke-width="1.8" marker-end="url(#arr-red)"/>
+  <rect x="600" y="555" width="250" height="20" rx="4" fill="#450a0a"/>
+  <text x="725" y="569" font-size="10" font-weight="700" fill="#fca5a5" text-anchor="middle">HTTP 409 Conflict: Insufficient Stock</text>
+
+  <!-- ==================== FOOTER GUARANTEES ==================== -->
+  <g transform="translate(50, 610)">
+    <rect width="900" height="50" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <circle cx="25" cy="25" r="8" fill="#10b981"/>
+    <text x="21" y="29" font-size="10" font-weight="900" fill="#ffffff">✓</text>
+    <text x="45" y="22" font-size="11" font-weight="700" fill="#ffffff">Guaranteed Consistency:</text>
+    <text x="45" y="37" font-size="10" fill="#94a3b8">Zero overselling, negative stock strictly prevented via CHECK (quantity &gt;= reserved_quantity), 100% ACID compliant under heavy concurrent load.</text>
+  </g>
+</svg>
