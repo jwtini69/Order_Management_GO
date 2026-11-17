@@ -5,12 +5,12 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(255) NOT NULL,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
-    role VARCHAR(20) NOT NULL DEFAULT 'customer' CHECK (role IN ('admin', 'customer')),
+    role VARCHAR(20) NOT NULL DEFAULT 'customer' CHECK (role IN ('admin', 'seller', 'customer')),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 
 -- Categories table
 CREATE TABLE IF NOT EXISTS categories (
@@ -34,10 +34,10 @@ CREATE TABLE IF NOT EXISTS products (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE INDEX idx_products_category ON products(category_id);
-CREATE INDEX idx_products_sku ON products(sku);
-CREATE INDEX idx_products_name ON products(name);
-CREATE INDEX idx_products_active ON products(is_active);
+CREATE INDEX IF NOT EXISTS idx_products_category ON products(category_id);
+CREATE INDEX IF NOT EXISTS idx_products_sku ON products(sku);
+CREATE INDEX IF NOT EXISTS idx_products_name ON products(name);
+CREATE INDEX IF NOT EXISTS idx_products_active ON products(is_active);
 
 -- Inventory table
 CREATE TABLE IF NOT EXISTS inventory (
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS inventory (
     CONSTRAINT chk_reserved_lte_quantity CHECK (reserved_quantity <= quantity)
 );
 
-CREATE INDEX idx_inventory_product ON inventory(product_id);
+CREATE INDEX IF NOT EXISTS idx_inventory_product ON inventory(product_id);
 
 -- Inventory transactions for audit trail
 CREATE TABLE IF NOT EXISTS inventory_transactions (
@@ -62,8 +62,8 @@ CREATE TABLE IF NOT EXISTS inventory_transactions (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE INDEX idx_inv_transactions_product ON inventory_transactions(product_id);
-CREATE INDEX idx_inv_transactions_type ON inventory_transactions(type);
+CREATE INDEX IF NOT EXISTS idx_inv_transactions_product ON inventory_transactions(product_id);
+CREATE INDEX IF NOT EXISTS idx_inv_transactions_type ON inventory_transactions(type);
 
 -- Orders table
 CREATE TABLE IF NOT EXISTS orders (
@@ -76,8 +76,8 @@ CREATE TABLE IF NOT EXISTS orders (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE INDEX idx_orders_user ON orders(user_id);
-CREATE INDEX idx_orders_status ON orders(status);
+CREATE INDEX IF NOT EXISTS idx_orders_user ON orders(user_id);
+CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);
 
 -- Order items table
 CREATE TABLE IF NOT EXISTS order_items (
@@ -89,8 +89,8 @@ CREATE TABLE IF NOT EXISTS order_items (
     total_price DECIMAL(10,2) NOT NULL CHECK (total_price > 0)
 );
 
-CREATE INDEX idx_order_items_order ON order_items(order_id);
-CREATE INDEX idx_order_items_product ON order_items(product_id);
+CREATE INDEX IF NOT EXISTS idx_order_items_order ON order_items(order_id);
+CREATE INDEX IF NOT EXISTS idx_order_items_product ON order_items(product_id);
 
 -- Function to auto-update updated_at timestamp
 CREATE OR REPLACE FUNCTION update_updated_at_column()
@@ -101,6 +101,11 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
+DROP TRIGGER IF EXISTS update_users_updated_at ON users;
 CREATE TRIGGER update_users_updated_at BEFORE UPDATE ON users FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+DROP TRIGGER IF EXISTS update_products_updated_at ON products;
 CREATE TRIGGER update_products_updated_at BEFORE UPDATE ON products FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+DROP TRIGGER IF EXISTS update_orders_updated_at ON orders;
 CREATE TRIGGER update_orders_updated_at BEFORE UPDATE ON orders FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();

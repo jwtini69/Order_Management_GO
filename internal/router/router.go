@@ -58,7 +58,7 @@ func SetupRouter(cfg RouterConfig) *gin.Engine {
 		categories := api.Group("/categories")
 		{
 			categories.GET("", cfg.ProductHandler.ListCategories)
-			categories.POST("", middleware.AuthMiddleware(cfg.JWTSecret), middleware.AdminOnly(), cfg.ProductHandler.CreateCategory)
+			categories.POST("", middleware.AuthMiddleware(cfg.JWTSecret), middleware.SellerOrAdmin(), cfg.ProductHandler.CreateCategory)
 		}
 
 		// Products routes
@@ -66,14 +66,14 @@ func SetupRouter(cfg RouterConfig) *gin.Engine {
 		{
 			products.GET("", cfg.ProductHandler.ListProducts)
 			products.GET("/:id", cfg.ProductHandler.GetProduct)
-			products.POST("", middleware.AuthMiddleware(cfg.JWTSecret), middleware.AdminOnly(), cfg.ProductHandler.CreateProduct)
-			products.PUT("/:id", middleware.AuthMiddleware(cfg.JWTSecret), middleware.AdminOnly(), cfg.ProductHandler.UpdateProduct)
-			products.DELETE("/:id", middleware.AuthMiddleware(cfg.JWTSecret), middleware.AdminOnly(), cfg.ProductHandler.DeleteProduct)
+			products.POST("", middleware.AuthMiddleware(cfg.JWTSecret ), middleware.SellerOrAdmin(), cfg.ProductHandler.CreateProduct)
+			products.PUT("/:id", middleware.AuthMiddleware(cfg.JWTSecret), middleware.SellerOrAdmin(), cfg.ProductHandler.UpdateProduct)
+			products.DELETE("/:id", middleware.AuthMiddleware(cfg.JWTSecret), middleware.SellerOrAdmin(), cfg.ProductHandler.DeleteProduct)
 		}
 
-		// Inventory routes (Admin only)
+		// Inventory routes (Seller & Admin)
 		inventory := api.Group("/inventory")
-		inventory.Use(middleware.AuthMiddleware(cfg.JWTSecret), middleware.AdminOnly())
+		inventory.Use(middleware.AuthMiddleware(cfg.JWTSecret), middleware.SellerOrAdmin())
 		{
 			inventory.GET("", cfg.InventoryHandler.ListAllInventory)
 			inventory.GET("/:product_id", cfg.InventoryHandler.GetInventory)

@@ -32,12 +32,18 @@ func (s *AuthService) Register(ctx context.Context, req models.RegisterRequest) 
 		return nil, fmt.Errorf("failed to hash password: %w", err)
 	}
 
+	// Default to customer; allow registering as seller
+	role := models.RoleCustomer
+	if req.Role == models.RoleSeller {
+		role = models.RoleSeller
+	}
+
 	user := &models.User{
 		Email:     req.Email,
 		Password:  string(hashedPassword),
 		FirstName: req.FirstName,
 		LastName:  req.LastName,
-		Role:      models.RoleCustomer,
+		Role:      role,
 	}
 
 	if err := s.userRepo.Create(ctx, user); err != nil {

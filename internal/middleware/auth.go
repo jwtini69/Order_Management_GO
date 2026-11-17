@@ -64,3 +64,22 @@ func AdminOnly() gin.HandlerFunc {
 		c.Next()
 	}
 }
+
+// SellerOrAdmin allows both Sellers and Admins to manage products and inventory
+func SellerOrAdmin() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		role, exists := c.Get("userRole")
+		if !exists {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
+			c.Abort()
+			return
+		}
+		userRole := role.(models.Role)
+		if userRole != models.RoleSeller && userRole != models.RoleAdmin {
+			c.JSON(http.StatusForbidden, gin.H{"error": "seller or admin access required"})
+			c.Abort()
+			return
+		}
+		c.Next()
+	}
+}

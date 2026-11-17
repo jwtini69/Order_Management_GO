@@ -222,29 +222,42 @@ All endpoints accept and return JSON. Authenticated endpoints require a Bearer t
 ### Authentication & Authorization
 | Method | Endpoint | Access | Description |
 | :--- | :--- | :--- | :--- |
-| `POST` | `/api/v1/auth/register` | Public | Register a new customer account (`email`, `password`, `first_name`, `last_name`). |
+| `POST` | `/api/v1/auth/register` | Public | Register an account (`email`, `password`, `first_name`, `last_name`, optional `role: "seller"` or `"customer"`). |
 | `POST` | `/api/v1/auth/login` | Public | Authenticate user and generate 24h JWT bearer token. |
 | `GET` | `/api/v1/auth/profile` | Auth | Retrieve authenticated user's profile and active role. |
+
+#### Registering as a Seller:
+```bash
+curl -X POST http://localhost:8080/api/v1/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "seller@store.com",
+    "password": "sellerpassword123",
+    "first_name": "Jane",
+    "last_name": "Merchant",
+    "role": "seller"
+  }'
+```
 
 ### Products & Categories
 | Method | Endpoint | Access | Description |
 | :--- | :--- | :--- | :--- |
 | `GET` | `/api/v1/products` | Public | Search and filter catalog with pagination (`search`, `category_id`, `min_price`, `max_price`, `page`, `page_size`, `sort_by`, `sort_order`). |
 | `GET` | `/api/v1/products/:id` | Public | Retrieve product details by ID. |
-| `POST` | `/api/v1/products` | **Admin** | Create new product and auto-initialize inventory ledger record. |
-| `PUT` | `/api/v1/products/:id` | **Admin** | Dynamically update product fields (partial update supported). |
-| `DELETE` | `/api/v1/products/:id` | **Admin** | Soft-delete product (`is_active = false`). |
+| `POST` | `/api/v1/products` | **Seller / Admin** | Create new product and auto-initialize inventory ledger record. |
+| `PUT` | `/api/v1/products/:id` | **Seller / Admin** | Dynamically update product fields (partial update supported). |
+| `DELETE` | `/api/v1/products/:id` | **Seller / Admin** | Soft-delete product (`is_active = false`). |
 | `GET` | `/api/v1/categories` | Public | List all product categories. |
-| `POST` | `/api/v1/categories` | **Admin** | Create a new product category. |
+| `POST` | `/api/v1/categories` | **Seller / Admin** | Create a new product category. |
 
 ### Inventory Management
 | Method | Endpoint | Access | Description |
 | :--- | :--- | :--- | :--- |
-| `GET` | `/api/v1/inventory` | **Admin** | View stock levels and reserved quantities across all products. |
-| `GET` | `/api/v1/inventory/:product_id` | **Admin** | View real-time inventory metrics for a specific product. |
-| `PUT` | `/api/v1/inventory/:product_id` | **Admin** | Update stock quantities and minimum safety stock alerts. |
-| `POST` | `/api/v1/inventory/:product_id/restock` | **Admin** | Restock SKU: increments quantity and writes audit transaction. |
-| `GET` | `/api/v1/inventory/:product_id/transactions` | **Admin** | Retrieve complete audit trail of stock adjustments for a SKU. |
+| `GET` | `/api/v1/inventory` | **Seller / Admin** | View stock levels and reserved quantities across all products. |
+| `GET` | `/api/v1/inventory/:product_id` | **Seller / Admin** | View real-time inventory metrics for a specific product. |
+| `PUT` | `/api/v1/inventory/:product_id` | **Seller / Admin** | Update stock quantities and minimum safety stock alerts. |
+| `POST` | `/api/v1/inventory/:product_id/restock` | **Seller / Admin** | Restock SKU: increments quantity and writes audit transaction. |
+| `GET` | `/api/v1/inventory/:product_id/transactions` | **Seller / Admin** | Retrieve complete audit trail of stock adjustments for a SKU. |
 
 ### Orders & Checkout (The Concurrency Gateway)
 | Method | Endpoint | Access | Description |

@@ -6,6 +6,7 @@ type Role string
 
 const (
 	RoleAdmin    Role = "admin"
+	RoleSeller   Role = "seller"
 	RoleCustomer Role = "customer"
 )
 
@@ -25,6 +26,7 @@ type RegisterRequest struct {
 	Password  string `json:"password" binding:"required,min=8"`
 	FirstName string `json:"first_name" binding:"required"`
 	LastName  string `json:"last_name" binding:"required"`
+	Role      Role   `json:"role"` // Optional: "seller" or "customer" (defaults to "customer")
 }
 
 type LoginRequest struct {

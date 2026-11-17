@@ -68,3 +68,10 @@ func TestStockReservationValidation(t *testing.T) {
 	// Cannot reserve 3 (oversell prevention)
 	assert.False(t, available >= 3)
 }
+
+func TestSellerRoleValidation(t *testing.T) {
+	assert.Equal(t, models.Role("seller"), models.RoleSeller)
+	assert.Equal(t, models.Role("admin"), models.RoleAdmin)
+	assert.Equal(t, models.Role("customer"), models.RoleCustomer)
+}
+
